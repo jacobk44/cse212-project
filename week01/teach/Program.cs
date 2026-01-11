@@ -1,12 +1,12 @@
-﻿Console.WriteLine("\n======================\nDivisors\n======================");
-Divisors.Run();
+﻿// Console.WriteLine("\n======================\nDivisors\n======================");
+// Divisors.Run();
 
-Console.WriteLine("\n======================\nArray Selector\n======================");
-ArraySelector.Run();
+// Console.WriteLine("\n======================\nArray Selector\n======================");
+// ArraySelector.Run();
 
 // Uncomment when you are ready to run this
-// Console.WriteLine("\n======================\nAlgorithms\n======================");
-// Algorithms.Run();
+Console.WriteLine("\n======================\nAlgorithms\n======================");
+Algorithms.Run();
 
 
 
@@ -16,3 +16,11 @@ ArraySelector.Run();
 //
 // Console.WriteLine("\n======================\nArray Selector Solution\n======================");
 // ArraySelectorSolution.Run();
+
+
+// var numbers = new List<int>();
+
+// numbers.Add(1);
+// numbers.Add(2); 
+// numbers.Add(3);
+// Console.WriteLine($"Count: {numbers.Count}");
