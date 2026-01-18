@@ -11,24 +11,64 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Add single VIP customer and serve immediately
+        // Expected Result: VIP customer is served first
         Console.WriteLine("Test 1");
-
-        // Defect(s) Found: 
+        var service = new CustomerService(4);
+        service.AddNewCustomer();
+        service.ServeCustomer();
+        // Defet(s) Found: none
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Add three customers and serve two, leaving one in the queue
+        // Expected Result: Customers served in FIFO order; last customer remains
         Console.WriteLine("Test 2");
+        service = new CustomerService(5);
+        Console.WriteLine("Enter first customer:");
+        service.AddNewCustomer(); // e.g., Name: Ethan, Account: 502, Problem: "Cannot reset password"
+        Console.WriteLine("Enter second customer:");
+        service.AddNewCustomer(); // e.g., Name: Fiona, Account: 503, Problem: "Software crash"
+        Console.WriteLine("Enter third customer:");
+        service.AddNewCustomer(); // e.g., Name: George, Account: 504, Problem: "Network issue"
+        Console.WriteLine($"Before serving customers: {service}");
+        service.ServeCustomer(); // Serve Ethan
+        service.ServeCustomer(); // Serve Fiona
+        Console.WriteLine($"After serving two customers: {service}");
 
-        // Defect(s) Found: 
-
+        // Test 3
+        // Scenario: Try to serve a customer from an empty queue
+        // Expected Result: Should display an error message
+        Console.WriteLine("Test 3");
+        service = new CustomerService(2);
+        service.ServeCustomer(); // Queue is empty
+        // Defect(s) Found: Fixed empty queue check
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 4
+        // Scenario: Test queue overflow by adding customers beyond max size
+        // Expected Result: Last customer should trigger an error message
+        Console.WriteLine("Test 4");
+        service = new CustomerService(2);
+        Console.WriteLine("Enter first customer for Test 4:");
+        service.AddNewCustomer(); // e.g., Hannah
+        Console.WriteLine("Enter second customer for Test 4:");
+        service.AddNewCustomer(); // e.g., Ian
+        Console.WriteLine("Attempt to add third customer for Test 4 (should fail):");
+        service.AddNewCustomer(); // e.g., Jack
+        Console.WriteLine($"Service Queue after attempts: {service}");
+        // Defect(s) Found: Fixed >= check in AddNewCustomer
+        Console.WriteLine("=================");
+
+        // Test 5
+        // Scenario: Create a queue with invalid max size
+        // Expected Result: Max size should default to 10
+        Console.WriteLine("Test 5");
+        service = new CustomerService(-5);
+        Console.WriteLine($"Queue created with default max size: {service}");
+        // Defect(s) Found: None
+        Console.WriteLine("=================");
     }
 
     private readonly List<Customer> _queue = new();
@@ -88,9 +128,16 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
+       if (_queue.Count <= 0) // Defect 2 - Need to check queue length
+        {
+            Console.WriteLine("No Customers in the queue");
+        }
+        else {
+            // Need to read and save the customer before it is deleted from the queue
+            var customer = _queue[0];
+            _queue.RemoveAt(0); // Defect 1 - Delete should be done after
+            Console.WriteLine(customer);
+        }
     }
 
     /// <summary>

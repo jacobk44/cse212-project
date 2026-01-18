@@ -13,7 +13,7 @@ public class PersonQueue
     /// <param name="person">The person to add</param>
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        _queue.Add(person);
     }
 
     public Person Dequeue()
@@ -32,4 +32,19 @@ public class PersonQueue
     {
         return $"[{string.Join(", ", _queue)}]";
     }
+    
+    // Extra helper: access by index (needed for PriorityQueue)
+    public Person Peek(int index)
+    {
+        return _queue[index];
+    }
+
+    // Extra helper: remove at specific index (needed for PriorityQueue)
+    public Person RemoveAt(int index)
+    {
+        var person = _queue[index];
+        _queue.RemoveAt(index);
+        return person;
+    }
 }
+
